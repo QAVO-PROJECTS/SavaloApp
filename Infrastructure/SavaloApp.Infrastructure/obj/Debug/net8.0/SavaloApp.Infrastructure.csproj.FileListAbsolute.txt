@@ -17,3 +17,4 @@
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Infrastructure/SavaloApp.Infrastructure/obj/Debug/net8.0/SavaloApp.Infrastructure.pdb
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Infrastructure/SavaloApp.Infrastructure/obj/Debug/net8.0/SavaloApp.Infrastructure.genruntimeconfig.cache
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Infrastructure/SavaloApp.Infrastructure/obj/Debug/net8.0/ref/SavaloApp.Infrastructure.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Infrastructure/SavaloApp.Infrastructure/obj/Debug/net8.0/SavaloApp.Infrastructure.sourcelink.json

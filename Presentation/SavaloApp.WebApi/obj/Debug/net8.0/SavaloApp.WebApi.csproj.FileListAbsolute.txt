@@ -147,3 +147,4 @@
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/obj/Debug/net8.0/SavaloApp.WebApi.pdb
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/obj/Debug/net8.0/SavaloApp.WebApi.genruntimeconfig.cache
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/obj/Debug/net8.0/ref/SavaloApp.WebApi.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/obj/Debug/net8.0/SavaloApp.WebApi.sourcelink.json

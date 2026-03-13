@@ -15,3 +15,4 @@
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Application/obj/Debug/net8.0/SavaloApp.Application.pdb
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Application/obj/Debug/net8.0/SavaloApp.Application.genruntimeconfig.cache
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Application/obj/Debug/net8.0/ref/SavaloApp.Application.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Application/obj/Debug/net8.0/SavaloApp.Application.sourcelink.json
