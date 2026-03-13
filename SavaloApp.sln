@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2BA8192D-E2DF-4E87-B0D2-A251D309FE10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8539DB31-9AF0-4A6C-BA01-430BC8FD2B60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{9934FDA5-BA40-49A4-826C-857DD9A90B3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavaloApp.Domain", "Core\SavaloApp.Domain\SavaloApp.Domain.csproj", "{B3144845-6166-44A1-9FC0-3D4CBFCB0EEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavaloApp.Application", "Core\SavaloApp.Application\SavaloApp.Application.csproj", "{B8E4874E-9E9B-4751-B959-11E2D6EC6CFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavaloApp.Infrastructure", "Infrastructure\SavaloApp.Infrastructure\SavaloApp.Infrastructure.csproj", "{C0BECB3E-E2C9-4DE0-8A1C-3F270C376169}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavaloApp.WebApi", "Presentation\SavaloApp.WebApi\SavaloApp.WebApi.csproj", "{E2C69C4A-F2BF-493F-87B9-A355CF0A57E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavaloApp.Persistance", "Infrastructure\SavaloApp.Persistance\SavaloApp.Persistance.csproj", "{795E1B84-8967-453A-9ECD-904024A8A8CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3144845-6166-44A1-9FC0-3D4CBFCB0EEA} = {2BA8192D-E2DF-4E87-B0D2-A251D309FE10}
+		{B8E4874E-9E9B-4751-B959-11E2D6EC6CFF} = {2BA8192D-E2DF-4E87-B0D2-A251D309FE10}
+		{C0BECB3E-E2C9-4DE0-8A1C-3F270C376169} = {8539DB31-9AF0-4A6C-BA01-430BC8FD2B60}
+		{E2C69C4A-F2BF-493F-87B9-A355CF0A57E4} = {9934FDA5-BA40-49A4-826C-857DD9A90B3E}
+		{795E1B84-8967-453A-9ECD-904024A8A8CA} = {8539DB31-9AF0-4A6C-BA01-430BC8FD2B60}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3144845-6166-44A1-9FC0-3D4CBFCB0EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3144845-6166-44A1-9FC0-3D4CBFCB0EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3144845-6166-44A1-9FC0-3D4CBFCB0EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3144845-6166-44A1-9FC0-3D4CBFCB0EEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E4874E-9E9B-4751-B959-11E2D6EC6CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E4874E-9E9B-4751-B959-11E2D6EC6CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E4874E-9E9B-4751-B959-11E2D6EC6CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E4874E-9E9B-4751-B959-11E2D6EC6CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0BECB3E-E2C9-4DE0-8A1C-3F270C376169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0BECB3E-E2C9-4DE0-8A1C-3F270C376169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0BECB3E-E2C9-4DE0-8A1C-3F270C376169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0BECB3E-E2C9-4DE0-8A1C-3F270C376169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2C69C4A-F2BF-493F-87B9-A355CF0A57E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2C69C4A-F2BF-493F-87B9-A355CF0A57E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2C69C4A-F2BF-493F-87B9-A355CF0A57E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2C69C4A-F2BF-493F-87B9-A355CF0A57E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{795E1B84-8967-453A-9ECD-904024A8A8CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{795E1B84-8967-453A-9ECD-904024A8A8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{795E1B84-8967-453A-9ECD-904024A8A8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{795E1B84-8967-453A-9ECD-904024A8A8CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

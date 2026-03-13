@@ -1,0 +1,14 @@
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/bin/Debug/net8.0/SavaloApp.Domain.deps.json
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/bin/Debug/net8.0/SavaloApp.Domain.runtimeconfig.json
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/bin/Debug/net8.0/SavaloApp.Domain.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/bin/Debug/net8.0/SavaloApp.Domain.pdb
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/SavaloApp.Domain.csproj.AssemblyReference.cache
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/SavaloApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/SavaloApp.Domain.AssemblyInfoInputs.cache
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/SavaloApp.Domain.AssemblyInfo.cs
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/SavaloApp.Domain.csproj.CoreCompileInputs.cache
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/SavaloApp.Domain.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/refint/SavaloApp.Domain.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/SavaloApp.Domain.pdb
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/SavaloApp.Domain.genruntimeconfig.cache
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Core/SavaloApp.Domain/obj/Debug/net8.0/ref/SavaloApp.Domain.dll

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "ZCIg9udXx23zPqQp/imsItPCY9dTLJrDeQfXOW91dNs=",
+  "Source": "SavaloApp.WebApi",
+  "BasePath": "_content/SavaloApp.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
