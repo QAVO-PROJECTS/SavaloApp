@@ -57,7 +57,8 @@ namespace SavaloApp.Persistance;
             services.AddScoped<IIconService, IconService>();
             services.AddScoped<ITermsAndConditionService, TermsAndConditionService>();
            services.AddHttpClient<IOtpSenderService, OtpSenderService>();
-            
+           services.AddScoped<IUserProfileService, UserProfileService>();
+
 
 
         }
