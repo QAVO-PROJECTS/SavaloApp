@@ -148,3 +148,8 @@
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/obj/Debug/net8.0/SavaloApp.WebApi.genruntimeconfig.cache
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/obj/Debug/net8.0/ref/SavaloApp.WebApi.dll
 /Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/obj/Debug/net8.0/SavaloApp.WebApi.sourcelink.json
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/bin/Debug/net8.0/BouncyCastle.Cryptography.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/bin/Debug/net8.0/MailKit.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/bin/Debug/net8.0/MimeKit.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/bin/Debug/net8.0/System.Security.Cryptography.Pkcs.dll
+/Users/gulchohrasultanova/Desktop/SavaloApp/SavaloApp/Presentation/SavaloApp.WebApi/bin/Debug/net8.0/runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll

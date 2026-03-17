@@ -10,10 +10,7 @@ namespace SavaloApp.Application.Validations.Auth
     {
         public RegisterRequestDtoValidator()
         {
-            RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("EMAIL_REQUIRED")
-                .EmailAddress().WithMessage("EMAIL_INVALID")
-                .MaximumLength(256).WithMessage("EMAIL_TOO_LONG");
+  
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("PASSWORD_REQUIRED")

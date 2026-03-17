@@ -12,6 +12,8 @@ public class User:IdentityUser
     public string Language { get; set; }
     public string AccountType { get; set; }
     public string? ProfileImage { get; set; }
+    public string? PendingEmail { get; set; }
+    public DateTime? PendingEmailExpireAt { get; set; }
     public List<CurrencyAccount>? CurrencyAccounts { get; set; }
     public List<Review>? Reviews { get; set; }
     public List<RefreshToken>? RefreshTokens { get; set; }

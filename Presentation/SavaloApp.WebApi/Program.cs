@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Localization;
 using SavaloApp.Application.Profiles;
 using SavaloApp.Application.Settings;
 using SavaloApp.Application.Validations.Auth;
+using SavaloApp.Domain.HelperEntities;
 using SavaloApp.Persistance.Seeders;
 
 
@@ -63,7 +64,7 @@ builder.Services.AddDbContext<SavaloAppDbContext>(opt =>
 builder.Services.AddIdentity<User, IdentityRole>(opt =>
 {
     opt.Password.RequireNonAlphanumeric = false;
-    opt.User.RequireUniqueEmail = true;
+    opt.User.RequireUniqueEmail = false;
 })
 .AddEntityFrameworkStores<SavaloAppDbContext>()
 .AddDefaultTokenProviders();
@@ -112,7 +113,7 @@ builder.Services.Configure<SmsSettings>(
     builder.Configuration.GetSection("SmsSettings"));
 
 // Mail
-// builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 // Swagger
 builder.Services.AddSwaggerGen(opt =>

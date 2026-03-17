@@ -17,6 +17,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(50);
 
         builder.Property(x => x.Email)
+            .IsRequired(false)
+            
             .HasMaxLength(100);
 
         builder.Property(x => x.PhoneNumber)
@@ -31,9 +33,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.AccountType)
             .HasDefaultValue("basic")
             .HasMaxLength(30);
+        
 
         builder.Property(x => x.ProfileImage)
             .HasMaxLength(500);
+
+        builder.HasIndex(x => x.Email)
+            .IsUnique(false);
 
 
 

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SavaloApp.Application.Abstracts.Services;
@@ -58,6 +59,17 @@ public class UserAuthController : ControllerBase
         });
     }
 
+    private string GetUserId()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                     ?? User.FindFirstValue("sub");
+
+        if (string.IsNullOrWhiteSpace(userId))
+            throw new GlobalAppException("USER_NOT_FOUND");
+
+        return userId;
+    }
+
     [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
@@ -102,7 +114,7 @@ public class UserAuthController : ControllerBase
     [HttpPost("send-otp")]
     public async Task<IActionResult> SendOtp([FromBody] SendOtpRequestDto dto)
     {
-        if (!ModelState.IsValid || dto == null)
+        if (!ModelState.IsValid || dto == null || string.IsNullOrWhiteSpace(dto.UserId))
             return InvalidInputResponse();
 
         return await HandleAsync(async () =>
@@ -122,7 +134,9 @@ public class UserAuthController : ControllerBase
     [HttpPost("verify-user")]
     public async Task<IActionResult> VerifyUser([FromBody] VerifyOtpRequestDto dto)
     {
-        if (!ModelState.IsValid || dto == null)
+        if (!ModelState.IsValid || dto == null ||
+            string.IsNullOrWhiteSpace(dto.UserId) ||
+            string.IsNullOrWhiteSpace(dto.Code))
             return InvalidInputResponse();
 
         return await HandleAsync(async () =>
@@ -225,6 +239,48 @@ public class UserAuthController : ControllerBase
             {
                 statusCode = 200,
                 message = "PHONE_VERIFIED_SUCCESS",
+                data = result
+            });
+        });
+    }
+
+    [Authorize]
+    [HttpPost("start-email-update")]
+    public async Task<IActionResult> StartEmailUpdate([FromBody] StartEmailUpdateDto dto)
+    {
+        if (!ModelState.IsValid || dto == null || string.IsNullOrWhiteSpace(dto.Email))
+            return InvalidInputResponse();
+
+        return await HandleAsync(async () =>
+        {
+            var userId = GetUserId();
+            var result = await _userAuthService.StartEmailUpdateAsync(userId, dto);
+
+            return Ok(new
+            {
+                statusCode = 200,
+                message = "EMAIL_OTP_SENT",
+                data = result
+            });
+        });
+    }
+
+    [Authorize]
+    [HttpPost("verify-email-otp")]
+    public async Task<IActionResult> VerifyEmailOtp([FromBody] VerifyEmailOtpDto dto)
+    {
+        if (!ModelState.IsValid || dto == null || string.IsNullOrWhiteSpace(dto.Code))
+            return InvalidInputResponse();
+
+        return await HandleAsync(async () =>
+        {
+            var userId = GetUserId();
+            var result = await _userAuthService.VerifyEmailOtpAsync(userId, dto);
+
+            return Ok(new
+            {
+                statusCode = 200,
+                message = "EMAIL_VERIFIED_SUCCESS",
                 data = result
             });
         });
