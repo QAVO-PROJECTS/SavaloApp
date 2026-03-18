@@ -151,64 +151,85 @@ public class UserAuthService : IUserAuthService
         return await BuildLoginResponseAsync(user);
     }
 
-    public async Task<SocialAuthResponseDto> GoogleLoginAsync(GoogleLoginRequestDto dto)
+public async Task<SocialAuthResponseDto> GoogleLoginAsync(GoogleLoginRequestDto dto)
+{
+    try
     {
-        try
+        if (dto == null || string.IsNullOrWhiteSpace(dto.IdToken))
+            throw new GlobalAppException("INVALID_GOOGLE_TOKEN");
+
+        var payload = await GoogleJsonWebSignature.ValidateAsync(dto.IdToken);
+
+        User? user = null;
+
+        // 🔍 1. User tap
+        if (!string.IsNullOrWhiteSpace(payload.Email))
+            user = await _userManager.FindByEmailAsync(payload.Email);
+     
+
+        // 🆕 2. USER YOXDUR → CREATE
+        if (user == null)
         {
-            if (dto == null || string.IsNullOrWhiteSpace(dto.IdToken))
-                throw new GlobalAppException("INVALID_GOOGLE_TOKEN");
+            var picture = payload.Picture;
+ 
 
-            var payload = await GoogleJsonWebSignature.ValidateAsync(dto.IdToken);
+            if (!string.IsNullOrWhiteSpace(picture))
+                picture = picture.Replace("s96-c", "s400-c");
 
-            User? user = null;
-
-            if (!string.IsNullOrWhiteSpace(payload.Email))
-                user = await _userManager.FindByEmailAsync(payload.Email);
-
-            if (user == null)
+            user = new User
             {
-                user = new User
-                {
-                    Email = payload.Email,
-                    UserName = !string.IsNullOrWhiteSpace(payload.Email)
-                        ? payload.Email
-                        : Guid.NewGuid().ToString(),
-                    FullName = $"{payload.GivenName} {payload.FamilyName}".Trim(),
-                    GoogleProviderId = payload.Subject,
-                    OAuthProvider = "Google",
-                    EmailConfirmed = true,
-                    AccountType = "Customer",
-                    Language = "az",
-                    TimeZone = "Asia/Baku",
-                    PhoneNumberConfirmed = false
-                };
+                Email = payload.Email,
+                UserName = !string.IsNullOrWhiteSpace(payload.Email)
+                    ? payload.Email
+                    : Guid.NewGuid().ToString(),
+                FullName = $"{payload.GivenName} {payload.FamilyName}".Trim(),
+                GoogleProviderId = payload.Subject,
+                OAuthProvider = "Google",
+                EmailConfirmed = true,
+                AccountType = "Customer",
+                Language = "az",
+                TimeZone = "Asia/Baku",
+                ProfileImage = picture,
+                PhoneNumberConfirmed = false
+            };
 
-                var createResult = await _userManager.CreateAsync(user);
-                if (!createResult.Succeeded)
-                {
-                    var errors = string.Join(", ", createResult.Errors.Select(x => x.Description));
-                    _logger.LogWarning("Google user create failed: {Errors}", errors);
-                    throw new GlobalAppException("USER_CREATE_FAILED");
-                }
+            var createResult = await _userManager.CreateAsync(user);
+            if (!createResult.Succeeded)
+                throw new GlobalAppException("USER_CREATE_FAILED");
 
-                await EnsureCustomerRoleAsync();
+            await EnsureCustomerRoleAsync();
 
-                var addRoleResult = await _userManager.AddToRoleAsync(user, "Customer");
-                if (!addRoleResult.Succeeded)
-                    throw new GlobalAppException("ROLE_ASSIGN_FAILED");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
+            if (!roleResult.Succeeded)
+                throw new GlobalAppException("ROLE_ASSIGN_FAILED");
+        }
+        else
+        {
+            // 🔄 3. EXISTING USER UPDATE
+            var updated = false;
+
+            if (string.IsNullOrWhiteSpace(user.GoogleProviderId))
+            {
+                user.GoogleProviderId = payload.Subject;
+                user.OAuthProvider = "Google";
+                updated = true;
             }
 
-            if (string.IsNullOrWhiteSpace(user.PhoneNumber) || !user.PhoneNumberConfirmed)
+            // 🖼 şəkil update (əgər boşdursa)
+            if (string.IsNullOrWhiteSpace(user.ProfileImage) && !string.IsNullOrWhiteSpace(payload.Picture))
             {
-                var tempToken = await _tempTokenService.GenerateTempTokenAsync(user, "Google");
-
-                return new SocialAuthResponseDto
-                {
-                    RequiresPhoneVerification = true,
-                    TempToken = tempToken
-                };
+                var picture = payload.Picture.Replace("s96-c", "s400-c");
+                user.ProfileImage = picture;
+                updated = true;
             }
 
+            if (updated)
+                await _userManager.UpdateAsync(user);
+        }
+
+        // ✅ 4. PHONE VARSA → LOGIN
+        if (!string.IsNullOrWhiteSpace(user.PhoneNumber) && user.PhoneNumberConfirmed)
+        {
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
             var refreshToken = await _tokenService.GenerateRefreshTokenAsync(user);
 
@@ -223,16 +244,26 @@ public class UserAuthService : IUserAuthService
                 }
             };
         }
-        catch (GlobalAppException)
+
+        // 📲 5. PHONE YOXDUR → TEMP TOKEN
+        var tempToken = await _tempTokenService.GenerateTempTokenAsync(user, "Google");
+
+        return new SocialAuthResponseDto
         {
-            throw;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Google login zamanı xəta baş verdi");
-            throw new GlobalAppException("GOOGLE_LOGIN_FAILED");
-        }
+            RequiresPhoneVerification = true,
+            TempToken = tempToken
+        };
     }
+    catch (GlobalAppException)
+    {
+        throw;
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Google login zamanı xəta baş verdi");
+        throw new GlobalAppException("GOOGLE_LOGIN_FAILED");
+    }
+}
 
     public async Task<SocialAuthResponseDto> AppleLoginAsync(AppleLoginRequestDto dto)
     {

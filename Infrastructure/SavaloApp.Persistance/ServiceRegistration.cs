@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using SavaloApp.Application.Abstracts.Repositories.Categories;
 using SavaloApp.Application.Abstracts.Repositories.CategorySections;
 using SavaloApp.Application.Abstracts.Repositories.CurrencyAccounts;
 using SavaloApp.Application.Abstracts.Repositories.GoalSections;
@@ -8,6 +9,7 @@ using SavaloApp.Application.Abstracts.Repositories.RefreshTokens;
 using SavaloApp.Application.Abstracts.Repositories.TermsAndConditions;
 using SavaloApp.Application.Abstracts.Services;
 using SavaloApp.Infrastructure.Concretes.Services;
+using SavaloApp.Persistance.Concretes.Repositories.Categories;
 using SavaloApp.Persistance.Concretes.Repositories.CategorySections;
 using SavaloApp.Persistance.Concretes.Repositories.CurrencyAccounts;
 using SavaloApp.Persistance.Concretes.Repositories.GoalSections;
@@ -43,15 +45,20 @@ namespace SavaloApp.Persistance;
             //TermsAndCondition
             services.AddScoped<ITermsAndConditionReadRepository, TermsAndConditionReadRepository>();
             services.AddScoped<ITermsAndConditionWriteRepository, TermsAndConditionWriteRepository>();
-            //ICurrencyAccount
+            //CurrencyAccount
             services.AddScoped<ICurrencyAccountReadRepository, CurrencyAccountReadRepository>();
             services.AddScoped<ICurrencyAccountWriteRepository, CurrencyAccountWriteRepository>();
+            //Category
+            services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
+            services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
+            
             
             
             
             //Services
             services.AddHttpClient<ISmsService, SmsService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<ICurrencyAccountService, CurrencyAccountService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddHttpClient<IAppleTokenValidator, AppleTokenValidator>();
             services.AddScoped<ITempTokenService, TempTokenService>();
@@ -62,8 +69,9 @@ namespace SavaloApp.Persistance;
             services.AddScoped<IGoalSectionService, GoalSectionService>();
             services.AddScoped<IIconService, IconService>();
             services.AddScoped<ITermsAndConditionService, TermsAndConditionService>();
-           services.AddHttpClient<IOtpSenderService, OtpSenderService>();
-           services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddHttpClient<IOtpSenderService, OtpSenderService>();
+            services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
 
 

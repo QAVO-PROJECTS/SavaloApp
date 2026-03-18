@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SavaloApp.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+899f946aa62a9c84fa73cc4844ab068e4da07d00")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+429eba999e0f8efe96a1dae1e0269b68552e226c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SavaloApp.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SavaloApp.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

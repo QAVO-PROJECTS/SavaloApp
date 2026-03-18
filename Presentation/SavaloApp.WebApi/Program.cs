@@ -187,7 +187,9 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 // }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseCors("corsapp");
+
 
 app.UseAuthentication();  // VERY IMPORTANT
 app.UseAuthorization();

@@ -1,0 +1,142 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SavaloApp.Application.Abstracts.Services;
+using SavaloApp.Application.Dtos.Category;
+using SavaloApp.Application.GlobalException;
+using System.Security.Claims;
+
+namespace SavaloApp.WebApi.Controllers;
+
+[ApiController]
+[Route("api/categories")]
+[Authorize]
+public class CategoriesController : ControllerBase
+{
+    private readonly ICategoryService _service;
+    private readonly ILogger<CategoriesController> _logger;
+
+    public CategoriesController(ICategoryService service, ILogger<CategoriesController> logger)
+    {
+        _service = service;
+        _logger = logger;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        return await HandleAsync(async () =>
+        {
+            var userId = GetUserId();
+            var result = await _service.GetAllAsync(userId);
+
+            return Ok(new
+            {
+                statusCode = 200,
+                message = "CATEGORY_LIST_SUCCESS",
+                data = result
+            });
+        });
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            return InvalidInput();
+
+        return await HandleAsync(async () =>
+        {
+            var userId = GetUserId();
+            var result = await _service.GetByIdAsync(id, userId);
+
+            return Ok(new
+            {
+                statusCode = 200,
+                message = "CATEGORY_GET_SUCCESS",
+                data = result
+            });
+        });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto)
+    {
+        if (!ModelState.IsValid)
+            return InvalidInput();
+
+        return await HandleAsync(async () =>
+        {
+            var userId = GetUserId();
+            var result = await _service.CreateAsync(dto, userId);
+
+            return Ok(new
+            {
+                statusCode = 200,
+                message = "CATEGORY_CREATE_SUCCESS",
+                data = result
+            });
+        });
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateCategoryDto dto)
+    {
+        if (!ModelState.IsValid || string.IsNullOrWhiteSpace(dto.Id))
+            return InvalidInput();
+
+        return await HandleAsync(async () =>
+        {
+            var userId = GetUserId();
+            await _service.UpdateAsync(dto, userId);
+
+            return Ok(new
+            {
+                statusCode = 200,
+                message = "CATEGORY_UPDATE_SUCCESS"
+            });
+        });
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            return InvalidInput();
+
+        return await HandleAsync(async () =>
+        {
+            var userId = GetUserId();
+            await _service.DeleteAsync(id, userId);
+
+            return Ok(new
+            {
+                statusCode = 200,
+                message = "CATEGORY_DELETE_SUCCESS"
+            });
+        });
+    }
+
+    private string GetUserId()
+        => User.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
+
+    private async Task<IActionResult> HandleAsync(Func<Task<IActionResult>> action)
+    {
+        try
+        {
+            return await action();
+        }
+        catch (GlobalAppException ex)
+        {
+            _logger.LogWarning(ex, ex.ErrorCode);
+            return BadRequest(new { statusCode = 400, error = ex.ErrorCode });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Server error");
+            return StatusCode(500, new { statusCode = 500, error = "SERVER_ERROR" });
+        }
+    }
+
+    private IActionResult InvalidInput()
+        => BadRequest(new { statusCode = 400, error = "INVALID_INPUT" });
+}
