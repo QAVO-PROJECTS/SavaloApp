@@ -3,7 +3,7 @@ using AutoMapper;
 using SavaloApp.Application.Dtos.Category;
 using SavaloApp.Domain.Entities;
 
-namespace SavaloApp.Persistance.MapperProfiles;
+namespace SavaloApp.Application.Profiles;
 
 public class CategoryProfile : Profile
 {
@@ -13,6 +13,9 @@ public class CategoryProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
             .ForMember(dest => dest.CurrencyAccountId, opt => opt.MapFrom(src => src.CurrencyAccountId.ToString()))
             .ForMember(dest => dest.IconId, opt => opt.MapFrom(src => src.IconId.ToString()))
+            .ForMember(dest => dest.CategorySectionImage, 
+                opt => opt.MapFrom(src => src.CategorySection != null ? src.CategorySection.Icon : null))
+
             .ForMember(dest => dest.RepeatType, opt => opt.MapFrom(src => src.Repeat))
             .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.HasValue 
                 ? src.StartDate.Value.ToString("yyyy-MM-dd") 

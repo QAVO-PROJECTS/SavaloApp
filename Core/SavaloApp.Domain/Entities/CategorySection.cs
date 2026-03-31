@@ -6,4 +6,5 @@ public class CategorySection:BaseEntity
 {
     public string Name { get; set; }
     public string Icon { get; set; }
+    public List<Category>? Categories { get; set; }
 }

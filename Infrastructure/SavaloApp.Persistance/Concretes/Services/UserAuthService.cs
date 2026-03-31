@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using SavaloApp.Application.Abstracts.Repositories.CurrencyAccounts;
 using SavaloApp.Application.Abstracts.Repositories.OtpCodes;
 using SavaloApp.Application.Abstracts.Services;
 using SavaloApp.Application.Dtos.UserAuth;
@@ -25,6 +26,7 @@ public class UserAuthService : IUserAuthService
     private readonly IOtpCodeWriteRepository _otpCodeWriteRepository;
     private readonly ILogger<UserAuthService> _logger;
     private readonly IMailService _mailService;
+    private readonly ICurrencyAccountWriteRepository _currencyWriteRepo;
 
     public UserAuthService(
         UserManager<User> userManager,
@@ -37,7 +39,8 @@ public class UserAuthService : IUserAuthService
         IOtpCodeReadRepository otpCodeReadRepository,
         IOtpCodeWriteRepository otpCodeWriteRepository,
         ILogger<UserAuthService> logger,
-        IMailService mailService)
+        IMailService mailService,
+        ICurrencyAccountWriteRepository currencyWriteRepo)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -50,6 +53,7 @@ public class UserAuthService : IUserAuthService
         _otpCodeWriteRepository = otpCodeWriteRepository;
         _logger = logger;
         _mailService = mailService;
+        _currencyWriteRepo = currencyWriteRepo;
     }
 
     public async Task<RegisterResponseDto> RegisterAsync(RegisterDto dto)
@@ -80,6 +84,14 @@ public class UserAuthService : IUserAuthService
             _logger.LogWarning("User create failed: {Errors}", errors);
             throw new GlobalAppException("USER_CREATE_FAILED");
         }
+        await _currencyWriteRepo.AddAsync(new CurrencyAccount
+        {
+            Name = "AZN",
+            Icon = "https://i.postimg.cc/2jV2Z500/Azeri-manat-symbol-svg.png", // istəsən dəyiş
+            UserId = user.Id
+        });
+
+        await _currencyWriteRepo.CommitAsync();
 
         await EnsureCustomerRoleAsync();
 
@@ -196,6 +208,14 @@ public async Task<SocialAuthResponseDto> GoogleLoginAsync(GoogleLoginRequestDto 
             var createResult = await _userManager.CreateAsync(user);
             if (!createResult.Succeeded)
                 throw new GlobalAppException("USER_CREATE_FAILED");
+            await _currencyWriteRepo.AddAsync(new CurrencyAccount
+            {
+                Name = "AZN",
+                Icon = "https://i.postimg.cc/2jV2Z500/Azeri-manat-symbol-svg.png", // istəsən dəyiş
+                UserId = user.Id
+            });
+
+            await _currencyWriteRepo.CommitAsync();
 
             await EnsureCustomerRoleAsync();
 
@@ -306,6 +326,14 @@ public async Task<SocialAuthResponseDto> GoogleLoginAsync(GoogleLoginRequestDto 
                 var createResult = await _userManager.CreateAsync(user);
                 if (!createResult.Succeeded)
                     throw new GlobalAppException("USER_CREATE_FAILED");
+                await _currencyWriteRepo.AddAsync(new CurrencyAccount
+                {
+                    Name = "AZN",
+                    Icon = "https://i.postimg.cc/2jV2Z500/Azeri-manat-symbol-svg.png", // istəsən dəyiş
+                    UserId = user.Id
+                });
+
+                await _currencyWriteRepo.CommitAsync();
 
                 await EnsureCustomerRoleAsync();
 
@@ -413,7 +441,7 @@ public async Task<SocialAuthResponseDto> GoogleLoginAsync(GoogleLoginRequestDto 
 
         return await BuildLoginResponseAsync(user);
     }
-
+       
     public async Task<bool> StartEmailUpdateAsync(string userId, StartEmailUpdateDto dto)
     {
         var user = await _userManager.FindByIdAsync(userId);

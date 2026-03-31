@@ -71,6 +71,7 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Customer")]
     public async Task<IActionResult> GetProfile()
     {
         return await HandleAsync(async () =>
@@ -87,6 +88,7 @@ public class UserProfileController : ControllerBase
         });
     }
 
+    [Authorize(Roles = "Customer")]
     [HttpPut("update-profile")]
     public async Task<IActionResult> UpdateProfile([FromForm] UpdateProfileDto dto)
     {
@@ -106,7 +108,7 @@ public class UserProfileController : ControllerBase
             });
         });
     }
-
+    [Authorize(Roles = "Customer")]
     [HttpPost("change-password")]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
     {

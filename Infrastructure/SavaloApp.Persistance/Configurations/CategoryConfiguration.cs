@@ -32,6 +32,10 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .WithMany(x => x.Categories)
             .HasForeignKey(x => x.IconId)
             .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CategorySection)
+            .WithMany(x => x.Categories)
+            .HasForeignKey(x => x.CategorySectionId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(x => x.CategoryTransactions)
             .WithOne(x => x.Category)

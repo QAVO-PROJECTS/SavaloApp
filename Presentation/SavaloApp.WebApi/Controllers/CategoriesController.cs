@@ -59,6 +59,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Customer")]
     public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto)
     {
         if (!ModelState.IsValid)
@@ -79,6 +80,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Customer")]
     public async Task<IActionResult> Update([FromBody] UpdateCategoryDto dto)
     {
         if (!ModelState.IsValid || string.IsNullOrWhiteSpace(dto.Id))
@@ -96,6 +98,7 @@ public class CategoriesController : ControllerBase
             });
         });
     }
+    [Authorize(Roles = "Customer")]
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)

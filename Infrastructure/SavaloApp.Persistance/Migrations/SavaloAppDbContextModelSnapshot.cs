@@ -160,9 +160,12 @@ namespace SavaloApp.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("Amount")
+                    b.Property<decimal?>("Amount")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid?>("CategorySectionId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ColorCode")
                         .IsRequired()
@@ -178,7 +181,7 @@ namespace SavaloApp.Persistance.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("IconId")
+                    b.Property<Guid?>("IconId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("IsDeleted")
@@ -201,6 +204,8 @@ namespace SavaloApp.Persistance.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategorySectionId");
 
                     b.HasIndex("CurrencyAccountId");
 
@@ -327,7 +332,7 @@ namespace SavaloApp.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("Amount")
+                    b.Property<decimal?>("Amount")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
@@ -348,7 +353,10 @@ namespace SavaloApp.Persistance.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("IconId")
+                    b.Property<Guid?>("GoalSectionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("IconId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("IsDeleted")
@@ -368,6 +376,8 @@ namespace SavaloApp.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CurrencyAccountId");
+
+                    b.HasIndex("GoalSectionId");
 
                     b.HasIndex("IconId");
 
@@ -801,6 +811,11 @@ namespace SavaloApp.Persistance.Migrations
 
             modelBuilder.Entity("SavaloApp.Domain.Entities.Category", b =>
                 {
+                    b.HasOne("SavaloApp.Domain.Entities.CategorySection", "CategorySection")
+                        .WithMany("Categories")
+                        .HasForeignKey("CategorySectionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("SavaloApp.Domain.Entities.CurrencyAccount", "CurrencyAccount")
                         .WithMany("Categories")
                         .HasForeignKey("CurrencyAccountId")
@@ -810,8 +825,9 @@ namespace SavaloApp.Persistance.Migrations
                     b.HasOne("SavaloApp.Domain.Entities.Icon", "Icon")
                         .WithMany("Categories")
                         .HasForeignKey("IconId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CategorySection");
 
                     b.Navigation("CurrencyAccount");
 
@@ -848,13 +864,19 @@ namespace SavaloApp.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SavaloApp.Domain.Entities.GoalSection", "GoalSection")
+                        .WithMany("Goals")
+                        .HasForeignKey("GoalSectionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("SavaloApp.Domain.Entities.Icon", "Icon")
                         .WithMany("Goals")
                         .HasForeignKey("IconId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CurrencyAccount");
+
+                    b.Navigation("GoalSection");
 
                     b.Navigation("Icon");
                 });
@@ -897,6 +919,11 @@ namespace SavaloApp.Persistance.Migrations
                     b.Navigation("CategoryTransactions");
                 });
 
+            modelBuilder.Entity("SavaloApp.Domain.Entities.CategorySection", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
             modelBuilder.Entity("SavaloApp.Domain.Entities.CurrencyAccount", b =>
                 {
                     b.Navigation("Categories");
@@ -907,6 +934,11 @@ namespace SavaloApp.Persistance.Migrations
             modelBuilder.Entity("SavaloApp.Domain.Entities.Goal", b =>
                 {
                     b.Navigation("GoalTransactions");
+                });
+
+            modelBuilder.Entity("SavaloApp.Domain.Entities.GoalSection", b =>
+                {
+                    b.Navigation("Goals");
                 });
 
             modelBuilder.Entity("SavaloApp.Domain.Entities.Icon", b =>

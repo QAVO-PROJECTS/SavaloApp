@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SavaloApp.Application.Abstracts.Repositories.OtpCodes;
 using SavaloApp.Application.Abstracts.Services;
+using SavaloApp.Application.Dtos.CurrencyAccount;
 using SavaloApp.Application.Dtos.UserAuth;
 using SavaloApp.Application.GlobalException;
 using SavaloApp.Domain.Entities;
@@ -37,7 +38,9 @@ public class UserProfileService : IUserProfileService
         if (string.IsNullOrWhiteSpace(userId))
             throw new GlobalAppException("INVALID_USER_ID");
 
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await _userManager.Users
+            .Include(x => x.CurrencyAccounts)
+            .FirstOrDefaultAsync(x => x.Id == userId);
         if (user == null)
             throw new GlobalAppException("USER_NOT_FOUND");
 
@@ -48,7 +51,13 @@ public class UserProfileService : IUserProfileService
             Email = user.Email ?? string.Empty,
             AvatarUrl = user.ProfileImage,
             TimeZone = user.TimeZone ?? "Asia/Baku",
-            Language = user.Language ?? "az"
+            Language = user.Language ?? "az",
+            Currencies = user.CurrencyAccounts.Select(x => new CurrencyAccountDto
+            {
+                Id=x.Id.ToString(),
+                Name = x.Name,
+                Icon = x.Icon
+            }).ToList()
         };
     }
 

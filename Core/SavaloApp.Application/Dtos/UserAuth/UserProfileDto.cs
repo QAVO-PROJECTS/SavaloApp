@@ -1,3 +1,5 @@
+using SavaloApp.Application.Dtos.CurrencyAccount;
+
 namespace SavaloApp.Application.Dtos.UserAuth;
 
 
@@ -10,4 +12,5 @@ public class UserProfileDto
     public string TimeZone { get; set; }
     public string Language { get; set; }
     public bool PhoneNumberConfirmed { get; set; }
+    public List<CurrencyAccountDto> Currencies { get; set; }
 }

@@ -1,6 +1,8 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SavaloApp.Application.Abstracts.Repositories.Categories;
+using SavaloApp.Application.Abstracts.Repositories.CategorySections;
+using SavaloApp.Application.Abstracts.Repositories.CurrencyAccounts;
 using SavaloApp.Application.Abstracts.Services;
 using SavaloApp.Application.Dtos.Category;
 using SavaloApp.Application.GlobalException;
@@ -13,22 +15,28 @@ public class CategoryService : ICategoryService
     private readonly ICategoryReadRepository _readRepo;
     private readonly ICategoryWriteRepository _writeRepo;
     private readonly IMapper _mapper;
+    private readonly ICategorySectionReadRepository _categorySectionReadRepository;
+    private readonly ICurrencyAccountReadRepository _currencyReadRepository;
 
     public CategoryService(
         ICategoryReadRepository readRepo,
         ICategoryWriteRepository writeRepo,
-        IMapper mapper)
+        IMapper mapper,
+         ICategorySectionReadRepository categorySectionReadRepository,
+         ICurrencyAccountReadRepository currencyReadRepository)
     {
         _readRepo = readRepo;
         _writeRepo = writeRepo;
         _mapper = mapper;
+        _categorySectionReadRepository = categorySectionReadRepository;
+        _currencyReadRepository = currencyReadRepository;
     }
 
     public async Task<List<CategoryDto>> GetAllAsync(string userId)
     {
         var entities = await _readRepo.GetAllAsync(x =>
             !x.IsDeleted &&
-            x.CurrencyAccount.UserId == userId);
+            x.CurrencyAccount.UserId == userId,include:q=>q.Include(x=>x.CategorySection).Include(x=>x.CurrencyAccount));
 
         return _mapper.Map<List<CategoryDto>>(entities);
     }
@@ -41,7 +49,7 @@ public class CategoryService : ICategoryService
             x.Id == gid &&
             !x.IsDeleted &&
             x.CurrencyAccount.UserId == userId,
-            include: q => q.Include(x => x.CurrencyAccount))
+            include: q => q.Include(x=>x.CategorySection).Include(x=>x.CurrencyAccount))
             ?? throw new GlobalAppException("CATEGORY_NOT_FOUND");
 
         return _mapper.Map<CategoryDto>(entity);
@@ -49,8 +57,45 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryDto> CreateAsync(CreateCategoryDto dto, string userId)
     {
-        var currencyId = ParseGuid(dto.CurrencyAccountId);
+      Guid currencyId;
+        if (string.IsNullOrWhiteSpace(dto.CurrencyAccountId))
+        {
+            var currency = await _currencyReadRepository
+                .GetAsync(x => x.UserId == userId && !x.IsDeleted);
 
+            if (currency == null)
+                throw new GlobalAppException("CURRENCY_NOT_FOUND");
+
+            currencyId = currency.Id;
+        }
+        else
+        {
+            currencyId = ParseGuid(dto.CurrencyAccountId);
+        }
+
+        // 🔥 ƏVVƏL DTO düzəlt
+        if (!string.IsNullOrWhiteSpace(dto.CategorySectionId))
+        {
+            var sectionId = ParseGuid(dto.CategorySectionId);
+
+            var section = await _categorySectionReadRepository
+                .GetAsync(x => x.Id == sectionId);
+
+            if (section == null)
+                throw new GlobalAppException("CATEGORY_SECTION_NOT_FOUND");
+
+            // ✅ default doldur
+            dto.Name ??= section.Name;
+            dto.Amount = 0;
+            dto.StartDate = DateTime.UtcNow.AddHours(4).ToString("dd.MM.yyyy");
+
+            // 👉 repeat null-dursa default
+            dto.RepeatType ??= RepeatType.None;
+
+            dto.ColorCode ??= "#FFFFFF";
+        }
+
+        // 🔥 SONRA MAP ET
         var entity = _mapper.Map<Category>(dto);
 
         entity.Id = Guid.NewGuid();

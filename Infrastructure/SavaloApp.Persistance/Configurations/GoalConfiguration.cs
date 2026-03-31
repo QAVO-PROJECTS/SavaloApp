@@ -28,6 +28,10 @@ public class GoalConfiguration : IEntityTypeConfiguration<Goal>
             .WithMany(x => x.Goals)
             .HasForeignKey(x => x.IconId)
             .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.GoalSection)
+            .WithMany(x => x.Goals)
+            .HasForeignKey(x => x.GoalSectionId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(x => x.GoalTransactions)
             .WithOne(x => x.Goal)
