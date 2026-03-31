@@ -140,6 +140,7 @@ builder.Services.AddSwaggerGen(opt =>
         }
     });
 });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("corsapp", policy =>
@@ -161,6 +162,7 @@ builder.Services.AddMemoryCache();
 
 
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 {
     await IdentitySeeder.SeedAsync(scope.ServiceProvider);
