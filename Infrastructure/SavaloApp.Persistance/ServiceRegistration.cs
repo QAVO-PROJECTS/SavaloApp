@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SavaloApp.Application.Abstracts.Repositories.Categories;
 using SavaloApp.Application.Abstracts.Repositories.CategorySections;
 using SavaloApp.Application.Abstracts.Repositories.CurrencyAccounts;
+using SavaloApp.Application.Abstracts.Repositories.Goals;
 using SavaloApp.Application.Abstracts.Repositories.GoalSections;
 using SavaloApp.Application.Abstracts.Repositories.Icons;
 using SavaloApp.Application.Abstracts.Repositories.OtpCodes;
@@ -12,6 +13,7 @@ using SavaloApp.Infrastructure.Concretes.Services;
 using SavaloApp.Persistance.Concretes.Repositories.Categories;
 using SavaloApp.Persistance.Concretes.Repositories.CategorySections;
 using SavaloApp.Persistance.Concretes.Repositories.CurrencyAccounts;
+using SavaloApp.Persistance.Concretes.Repositories.Goals;
 using SavaloApp.Persistance.Concretes.Repositories.GoalSections;
 using SavaloApp.Persistance.Concretes.Repositories.Icons;
 using SavaloApp.Persistance.Concretes.Repositories.OtpCodes;
@@ -51,6 +53,9 @@ namespace SavaloApp.Persistance;
             //Category
             services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
+            //Goal
+            services.AddScoped<IGoalReadRepository, GoAlReadRepository>();
+            services.AddScoped<IGoalWriteRepository, GoalWriteRepository>();
             
             
             
@@ -72,6 +77,7 @@ namespace SavaloApp.Persistance;
             services.AddHttpClient<IOtpSenderService, OtpSenderService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IGoalService, GoalService>();
 
 
 
