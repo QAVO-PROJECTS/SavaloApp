@@ -13,5 +13,5 @@ public class CategoryDto
     public  string StartDate { get; set; }
     public string ColorCode { get; set; }
     public string IconId { get; set; }
-    public decimal TotalTransactionAmount { get; set; }
+
 }

@@ -4,8 +4,6 @@ public class UpdateCategoryDto
 {
     public string Id { get; set; }
     public string? Name { get; set; }
-    public decimal? Amount { get; set; }
- 
     public RepeatType? RepeatType { get; set; }
     public  string? StartDate { get; set; }
     public string? ColorCode { get; set; }

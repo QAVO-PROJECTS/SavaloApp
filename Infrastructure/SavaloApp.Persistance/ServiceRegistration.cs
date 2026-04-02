@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SavaloApp.Application.Abstracts.Repositories.Categories;
 using SavaloApp.Application.Abstracts.Repositories.CategorySections;
+using SavaloApp.Application.Abstracts.Repositories.CategoryTransactions;
 using SavaloApp.Application.Abstracts.Repositories.CurrencyAccounts;
 using SavaloApp.Application.Abstracts.Repositories.Goals;
 using SavaloApp.Application.Abstracts.Repositories.GoalSections;
@@ -12,6 +13,7 @@ using SavaloApp.Application.Abstracts.Services;
 using SavaloApp.Infrastructure.Concretes.Services;
 using SavaloApp.Persistance.Concretes.Repositories.Categories;
 using SavaloApp.Persistance.Concretes.Repositories.CategorySections;
+using SavaloApp.Persistance.Concretes.Repositories.CategoryTransactions;
 using SavaloApp.Persistance.Concretes.Repositories.CurrencyAccounts;
 using SavaloApp.Persistance.Concretes.Repositories.Goals;
 using SavaloApp.Persistance.Concretes.Repositories.GoalSections;
@@ -56,6 +58,9 @@ namespace SavaloApp.Persistance;
             //Goal
             services.AddScoped<IGoalReadRepository, GoAlReadRepository>();
             services.AddScoped<IGoalWriteRepository, GoalWriteRepository>();
+            //CategoryTransaction
+            services.AddScoped<ICategoryTransactionReadRepository, CategoryTransactionReadRepository>();
+            services.AddScoped<ICategoryTransactionWriteRepository, CategoryTransactionWriteRepository>();
             
             
             
@@ -78,6 +83,7 @@ namespace SavaloApp.Persistance;
             services.AddScoped<IUserProfileService, UserProfileService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IGoalService, GoalService>();
+            services.AddScoped<ICategoryTransactionService, CategoryTransactionService>();
 
 
 

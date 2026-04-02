@@ -36,7 +36,7 @@ public class CategoryService : ICategoryService
     {
         var entities = await _readRepo.GetAllAsync(x =>
             !x.IsDeleted &&
-            x.CurrencyAccount.UserId == userId,include:q=>q.Include(x=>x.CategorySection).Include(x=>x.CurrencyAccount));
+            x.CurrencyAccount.UserId == userId,include:q=>q.Include(x=>x.CategorySection).Include(x=>x.CurrencyAccount).Include(x=>x.CategoryTransactions));
 
         return _mapper.Map<List<CategoryDto>>(entities);
     }
@@ -49,7 +49,7 @@ public class CategoryService : ICategoryService
             x.Id == gid &&
             !x.IsDeleted &&
             x.CurrencyAccount.UserId == userId,
-            include: q => q.Include(x=>x.CategorySection).Include(x=>x.CurrencyAccount))
+            include: q => q.Include(x=>x.CategorySection).Include(x=>x.CurrencyAccount).Include(x=>x.CategoryTransactions))
             ?? throw new GlobalAppException("CATEGORY_NOT_FOUND");
 
         return _mapper.Map<CategoryDto>(entity);

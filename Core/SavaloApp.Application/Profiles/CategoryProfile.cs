@@ -13,18 +13,14 @@ public class CategoryProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
             .ForMember(dest => dest.CurrencyAccountId, opt => opt.MapFrom(src => src.CurrencyAccountId.ToString()))
             .ForMember(dest => dest.IconId, opt => opt.MapFrom(src => src.IconId.ToString()))
-            .ForMember(dest => dest.CategorySectionImage, 
+            .ForMember(dest => dest.CategorySectionImage,
                 opt => opt.MapFrom(src => src.CategorySection != null ? src.CategorySection.Icon : null))
 
             .ForMember(dest => dest.RepeatType, opt => opt.MapFrom(src => src.Repeat))
-            .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.HasValue 
-                ? src.StartDate.Value.ToString("yyyy-MM-dd") 
+            .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.HasValue
+                ? src.StartDate.Value.ToString("yyyy-MM-dd")
                 : null))
-            .ForMember(dest => dest.TotalTransactionAmount,
-                opt => opt.MapFrom(src => src.CategoryTransactions != null
-                    ? src.CategoryTransactions.Sum(x => x.Amount)
-                    : 0));
-
+;
         CreateMap<CreateCategoryDto, Category>()
             .ForMember(dest => dest.Repeat,
                 opt => opt.MapFrom(src => src.RepeatType.ToString()))
