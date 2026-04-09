@@ -12,7 +12,5 @@ public class CategoryTransactionProfile : Profile
 
         CreateMap<CreateCategoryTransactionDto, CategoryTransaction>();
 
-        CreateMap<UpdateCategoryTransactionDto, CategoryTransaction>()
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
     }
 }

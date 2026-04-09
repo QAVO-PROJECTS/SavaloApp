@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SavaloApp.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+baab1728f3f24cab1b09b01cf2241e82bc3cc0c6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39a90a0248178dbc8663c17d3c43104f2bf5b85b")]
 [assembly: System.Reflection.AssemblyProductAttribute("SavaloApp.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SavaloApp.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

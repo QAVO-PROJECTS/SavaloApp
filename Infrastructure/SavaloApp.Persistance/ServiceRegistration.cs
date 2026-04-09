@@ -5,6 +5,7 @@ using SavaloApp.Application.Abstracts.Repositories.CategoryTransactions;
 using SavaloApp.Application.Abstracts.Repositories.CurrencyAccounts;
 using SavaloApp.Application.Abstracts.Repositories.Goals;
 using SavaloApp.Application.Abstracts.Repositories.GoalSections;
+using SavaloApp.Application.Abstracts.Repositories.GoalTransactions;
 using SavaloApp.Application.Abstracts.Repositories.Icons;
 using SavaloApp.Application.Abstracts.Repositories.OtpCodes;
 using SavaloApp.Application.Abstracts.Repositories.RefreshTokens;
@@ -17,6 +18,7 @@ using SavaloApp.Persistance.Concretes.Repositories.CategoryTransactions;
 using SavaloApp.Persistance.Concretes.Repositories.CurrencyAccounts;
 using SavaloApp.Persistance.Concretes.Repositories.Goals;
 using SavaloApp.Persistance.Concretes.Repositories.GoalSections;
+using SavaloApp.Persistance.Concretes.Repositories.GoalTransactions;
 using SavaloApp.Persistance.Concretes.Repositories.Icons;
 using SavaloApp.Persistance.Concretes.Repositories.OtpCodes;
 using SavaloApp.Persistance.Concretes.Repositories.RefreshTokens;
@@ -61,6 +63,9 @@ namespace SavaloApp.Persistance;
             //CategoryTransaction
             services.AddScoped<ICategoryTransactionReadRepository, CategoryTransactionReadRepository>();
             services.AddScoped<ICategoryTransactionWriteRepository, CategoryTransactionWriteRepository>();
+            //GoalTransaction
+            services.AddScoped<IGoalTransactionReadRepository, GoalTransactionReadRepository>();
+            services.AddScoped<IGoalTransactionWriteRepository, GoalTransactionWriteRepository>();
             
             
             
@@ -84,6 +89,7 @@ namespace SavaloApp.Persistance;
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IGoalService, GoalService>();
             services.AddScoped<ICategoryTransactionService, CategoryTransactionService>();
+            services.AddScoped<IGoalTransactionService, GoalTransactionService>();
 
 
 

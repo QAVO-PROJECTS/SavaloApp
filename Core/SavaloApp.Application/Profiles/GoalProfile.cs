@@ -27,7 +27,7 @@ public class GoalProfile : Profile
                     : null))
             .ForMember(dest => dest.TotalTransactionAmount,
                 opt => opt.MapFrom(src => src.GoalTransactions != null
-                    ? src.GoalTransactions.Sum(x => x.Amount)
+                    ? src.GoalTransactions.Sum(x => x.TransactionType ? -x.Amount : x.Amount)
                     : 0));
 
         // ✅ CREATE DTO → ENTITY

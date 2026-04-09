@@ -9,7 +9,7 @@ namespace SavaloApp.WebApi.Controllers;
 
 [ApiController]
 [Route("api/category-transactions")]
-[Authorize]
+[Authorize(Roles = "Customer")]
 public class CategoryTransactionsController : ControllerBase
 {
     private readonly ICategoryTransactionService _service;
@@ -77,7 +77,7 @@ public class CategoryTransactionsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Customer")]
+
     public async Task<IActionResult> Create([FromBody] CreateCategoryTransactionDto dto)
     {
         if (!ModelState.IsValid)
@@ -99,7 +99,7 @@ public class CategoryTransactionsController : ControllerBase
 
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Customer")]
+
     public async Task<IActionResult> Delete(string id)
     {
         if (string.IsNullOrWhiteSpace(id))

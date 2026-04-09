@@ -9,7 +9,7 @@ namespace SavaloApp.WebApi.Controllers;
 
 [ApiController]
 [Route("api/goals")]
-[Authorize]
+[Authorize(Roles = "Customer")]
 public class GoalsController : ControllerBase
 {
     private readonly IGoalService _service;
@@ -59,7 +59,7 @@ public class GoalsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Customer")]
+
     public async Task<IActionResult> Create([FromBody] CreateGoalDto dto)
     {
         if (!ModelState.IsValid)
@@ -80,7 +80,7 @@ public class GoalsController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Roles = "Customer")]
+
     public async Task<IActionResult> Update([FromBody] UpdateGoalDto dto)
     {
         if (!ModelState.IsValid || string.IsNullOrWhiteSpace(dto.Id))
@@ -100,7 +100,7 @@ public class GoalsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Customer")]
+
     public async Task<IActionResult> Delete(string id)
     {
         if (string.IsNullOrWhiteSpace(id))
